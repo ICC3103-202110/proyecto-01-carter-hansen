@@ -100,11 +100,22 @@ class Coup() :
 
                         print("J%d está por realizar la acción %s"%(i, action))
                         sleep(2)
+                        challenger = None
                         if action == "Asesinato"  :
                             if self.players[i].coin < 3 :
                                 print("No tienes las monedas para realizar un asesinato.")
                                 sleep(2)
-                                self.turn(i)
+                                while True:
+                                    self.show_plays(turn_plays)
+                                    action = input("¿Cuál de estas acciones deseas realizar?\n")
+                                    action = action.capitalize()
+                                    if action in self.NUMBERS :
+                                        action = self.allplays[int(action)-1]
+                                    if action not in self.allplays :
+                                        pass
+                                    else :
+                                        break
+
 
                         if action in self.general_plays :   
                             print("Elegiste una acción general, por lo que no es desafiable")
@@ -203,7 +214,7 @@ class Coup() :
     def checkplay(self, player, a):
         if a == "Ingresos" or a == '6':            
             self.players[player].coin_setter(1)
-            log = " used Income and got 1 coin"
+            log = " usó Ingresos y consiguió 1 moneda"
             
         elif a == "AyudaExtranjera" or a == '5':
             self.players[player].coin_setter(2)
